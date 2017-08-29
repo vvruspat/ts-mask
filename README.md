@@ -3,6 +3,8 @@ Typescript input mask
 
 ## Install
 
+  npm install ts-mask
+
 ## Usegate
 
   ### Mask
