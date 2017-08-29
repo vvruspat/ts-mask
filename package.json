@@ -1,0 +1,27 @@
+{
+  "name": "ts-mask",
+  "version": "1.0.0",
+  "description": "Typescript input mask",
+  "main": "dist/ts-mask.js",
+  "scripts": {
+    "postinstall": "./node_modules/.bin/tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vvruspat/ts-mask.git"
+  },
+  "keywords": [
+    "typescript",
+    "input",
+    "mask"
+  ],
+  "author": "Alexander Kolesov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vvruspat/ts-mask/issues"
+  },
+  "homepage": "https://github.com/vvruspat/ts-mask#readme",
+  "dependencies": {
+    "typescript": "^2.4.2"
+  }
+}
