@@ -1,8 +1,9 @@
 {
   "name": "ts-mask",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Typescript input mask",
-  "main": "dist/ts-mask.d.ts",
+  "main": "dist/ts-mask",
+  "typings": "dist/ts-mask",
   "scripts": {
     "postinstall": "./node_modules/.bin/tsc"
   },
