@@ -14,7 +14,7 @@ Typescript input mask
     input: HTMLInputElement<br />
     mask: (RegExp | string)[]<br />
 
-# Example
+## Example
 
 component.html
 ```
