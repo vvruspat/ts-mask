@@ -1,3 +1,5 @@
 /.idea
 /dist
+/bin
+/example
 /node_modules

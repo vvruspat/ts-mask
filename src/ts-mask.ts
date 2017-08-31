@@ -1,3 +1,8 @@
+interface ISelection {
+    start: number;
+    end: number;
+}
+
 const bypassKeys = [9, 16, 17, 18, 36, 37, 38, 39, 40, 91];
 
 class TSMask {
@@ -20,6 +25,7 @@ class TSMask {
 
     protected bindEvents() {
         this.input.addEventListener('keypress', this.onKeypress.bind(this));
+        this.input.addEventListener('keydown', this.onKeydown.bind(this));
         this.input.addEventListener('focus', this.onFocus.bind(this));
     }
 
@@ -66,13 +72,44 @@ class TSMask {
 
     }
 
+    private getSelection(): ISelection {
+        return {start: this.input.selectionStart, end: this.input.selectionEnd};
+    }
+
     // Events
 
-    protected onKeypress(event: KeyboardEvent) {
-        let pos = this.getCaret();
+    protected onKeydown(event: KeyboardEvent) {
+        // Backspace
+        if (event.which === 8) {
+            let pos = this.getCaret(),
+                selection: ISelection = this.getSelection();
 
-        if (bypassKeys.indexOf(parseInt(event.code)) === -1) {
+            if (selection.start !== selection.end) {
+                for (let i = selection.start; i < selection.end; i++) {
+                    this.currValue[i] = undefined;
+                }
+            } else {
+                this.currValue[pos - 1] = undefined;
+                pos = pos - 1;
+            }
+
+            this.updateInput(pos);
+            this.setCaret(pos);
+
             event.preventDefault();
+        }
+    }
+
+    protected onKeypress(event: KeyboardEvent) {
+        let pos = this.getCaret(),
+            selection: ISelection = this.getSelection();
+
+        if (selection.start !== selection.end) {
+            for (let i = selection.start; i < selection.end; i++) {
+                this.currValue[i] = undefined;
+            }
+        } else {
+            this.currValue[pos] = undefined;
         }
 
         if (this.mask[pos]) {
@@ -82,14 +119,16 @@ class TSMask {
                 this.onKeypress(event);
             } else {
                 if ((<RegExp>this.mask[pos]).test(event.key)) {
-                    this.prevValue = this.currValue;
                     this.currValue[pos] = event.key;
                     this.updateInput(pos);
                 }
             }
+        }
+
+        if (bypassKeys.indexOf(event.which) === -1) {
+            event.preventDefault();
         } else {
-            this.currValue = this.prevValue;
-            this.updateInput();
+            this.updateInput(pos);
         }
 
 
